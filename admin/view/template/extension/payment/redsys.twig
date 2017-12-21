@@ -1,0 +1,304 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-redsys-entorno">{{ entry_entorno }}</label>
+            <div class="col-sm-10">
+              <select name="payment_redsys_entorno" id="input-redsys-entorno" class="form-control">
+			    {% if payment_redsys_entorno == 'Real' %}
+                <option value="Real" selected="selected">{{ text_real }}</option>
+                {% else %}
+                <option value="Real">{{ text_real }}</option>
+                {% endif %}
+				{% if payment_redsys_entorno == 'Sis-d' %}
+                <option value="Sis-d" selected="selected">{{ text_sisd }}</option>
+                {% else %}
+                <option value="Sis-d">{{ text_sisd }}</option>
+                {% endif %}
+				{% if payment_redsys_entorno == 'Sis-i' %}
+                <option value="Sis-i" selected="selected">{{ text_sisi }}</option>
+                {% else %}
+                <option value="Sis-i">{{ text_sisi }}</option>
+                {% endif %}
+				{% if payment_redsys_entorno == 'Sis-t' %}
+                <option value="Sis-t" selected="selected">{{ text_sist }}</option>
+                {% else %}
+                <option value="Sis-t">{{ text_sist }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+		  
+		  <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-redsys-nombre">{{ entry_nombre }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="payment_redsys_nombre" for="input-redsys-nombre" value="{{ payment_redsys_nombre }}" placeholder="{{ entry_nombre }}" class="form-control" />
+			  {% if error_nombre %}
+              <div class="text-danger">{{ error_nombre }}</div>
+              {% endif %}
+            </div>
+          </div>
+		  
+		  <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-redsys-fuc">{{ entry_fuc }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="payment_redsys_fuc" id="input-redsys-fuc" value="{{ payment_redsys_fuc }}" placeholder="{{ entry_fuc }}" class="form-control" />
+			  {% if error_fuc %}
+              <div class="text-danger">{{ error_fuc }}</div>
+              {% endif %}
+            </div>
+          </div>
+		  
+		  <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-redsys-tipopago">{{ entry_tipopago }}</label>
+            <div class="col-sm-10">
+			  <select name="payment_redsys_tipopago" id="input-redsys-tipopago" class="form-control">
+			    {% if payment_redsys_tipopago == ' ' %}
+                <option value=" " selected="selected">{{ text_type_all }}</option>
+                {% else %}
+                <option value=" ">{{ text_type_all }}</option>
+                {% endif %}
+				{% if payment_redsys_tipopago == 'C' %}
+                <option value="C" selected="selected">{{ text_type_card }}</option>
+                {% else %}
+                <option value="C">{{ text_type_card }}</option>
+                {% endif %}
+				{% if payment_redsys_tipopago == 'T' %}
+                <option value="T" selected="selected">{{ text_type_iupay }}</option>
+                {% else %}
+                <option value="T">{{ text_type_iupay }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+		  
+		  <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-redsys-clave256">{{ entry_clave256 }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="payment_redsys_clave256" id="input-redsys-clave256" value="{{ payment_redsys_clave256 }}" placeholder="{{ entry_clave256 }}" class="form-control" />
+			  {% if error_clave256 %}
+              <div class="text-danger">{{ error_clave256 }}</div>
+              {% endif %}
+            </div>			
+          </div>
+		  
+		  <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-redsys-term">{{ entry_term }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="payment_redsys_term" id="input-redsys-term" value="{{ payment_redsys_term }}" placeholder="{{ redsys_term }}" class="form-control" />
+			  {% if error_term %}
+              <div class="text-danger">{{ error_term }}</div>
+              {% endif %}
+            </div>
+          </div>
+
+		  <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-redsys-moneda">{{ entry_moneda }}</label>
+            <div class="col-sm-10">
+			  <select name="payment_redsys_moneda" id="input-redsys-moneda" class="form-control" >
+			    {% if payment_redsys_moneda == 'EURO' %}
+                <option value="EURO" selected="selected">{{ text_euro }}</option>
+                {% else %}
+                <option value="EURO">{{ text_euro }}</option>
+                {% endif %}
+				{% if payment_redsys_moneda == 'DOLAR' %}
+                <option value="DOLAR" selected="selected">{{ text_dollar }}</option>
+                {% else %}
+                <option value="DOLAR">{{ text_dollar }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+		  
+		  <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-redsys-trans">{{ entry_trans }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="payment_redsys_trans" for="input-redsys-trans" value="0" class="form-control" />
+			  {% if error_trans %}
+              <div class="text-danger">{{ error_trans }}</div>
+              {% endif %}
+            </div>
+          </div>
+
+		  <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-redsys-log">{{ entry_log }}</label>
+            <div class="col-sm-10">
+			  <select name="payment_redsys_log" id="input-redsys-log" class="form-control">
+			    {% if payment_redsys_log == 'Si' %}
+                <option value="Si" selected="selected">{{ text_yes }}</option>
+                {% else %}
+                <option value="Si">{{ text_yes }}</option>
+                {% endif %}
+				{% if payment_redsys_log == 'No' %}
+                <option value="No" selected="selected">{{ text_no }}</option>
+                {% else %}
+                <option value="No">{{ text_no }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+      
+		  <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-redsys-error-pedido">{{ entry_error_pedido }}</label>
+            <div class="col-sm-10">
+			  <select name="payment_redsys_error_pedido" id="input-redsys-error-pedido" class="form-control">
+			    {% if payment_redsys_error_pedido == 'Si' %}
+                <option value="Si" selected="selected">{{ text_yes }}</option>
+                {% else %}
+                <option value="Si">{{ text_yes }}</option>
+                {% endif %}
+				{% if payment_redsys_error_pedido == 'No' %}
+                <option value="No" selected="selected">{{ text_no }}</option>
+                {% else %}
+                <option value="No">{{ text_no }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+		  
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-redsys-notif"><span data-toggle="tooltip" title="{{ help_notif }}">{{ entry_notif }}</span></label>
+            <div class="col-sm-10">
+			  <select name="payment_redsys_notif" id="input-redsys-notif" class="form-control">
+			    {% if payment_redsys_notif == 'Si' %}
+                <option value="Si" selected="selected">{{ text_yes }}</option>
+                {% else %}
+                <option value="Si">{{ text_yes }}</option>
+                {% endif %}
+				{% if payment_redsys_notif == 'No' %}
+                <option value="No" selected="selected">{{ text_no }}</option>
+                {% else %}
+                <option value="No">{{ text_no }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+      
+		  <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-redsys-ssl">{{ entry_ssl }}</label>
+            <div class="col-sm-10">
+			  <select name="payment_redsys_ssl" id="input-redsys-ssl" class="form-control">
+			    {% if payment_redsys_ssl == 'Si' %}
+                <option value="Si" selected="selected">{{ text_yes }}</option>
+                {% else %}
+                <option value="Si">{{ text_yes }}</option>
+                {% endif %}
+				{% if payment_redsys_ssl == 'No' %}
+                <option value="No" selected="selected">{{ text_no }}</option>
+                {% else %}
+                <option value="No">{{ text_no }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+		  
+		  <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-redsys-error">{{ entry_error }}</label>
+            <div class="col-sm-10">
+			  <select name="payment_redsys_error" id="input-redsys-error" class="form-control">
+			    {% if payment_redsys_error == 'Si' %}
+                <option value="Si" selected="selected">{{ text_yes }}</option>
+                {% else %}
+                <option value="Si">{{ text_yes }}</option>
+                {% endif %}
+				{% if payment_redsys_error == 'No' %}
+                <option value="No" selected="selected">{{ text_no }}</option>
+                {% else %}
+                <option value="No">{{ text_no }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+          
+		  <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-redsys-idiomas">{{ entry_idiomas }}</label>
+            <div class="col-sm-10">
+			  <select name="payment_redsys_idiomas" id="input-redsys-idiomas" class="form-control">
+			    {% if payment_redsys_idiomas == 'Si' %}
+                <option value="Si" selected="selected">{{ text_yes }}</option>
+                {% else %}
+                <option value="Si">{{ text_yes }}</option>
+                {% endif %}
+				{% if payment_redsys_idiomas == 'No' %}
+                <option value="No" selected="selected">{{ text_no }}</option>
+                {% else %}
+                <option value="No">{{ text_no }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+		  
+		  <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-redsys-status">{{ entry_status }}</label>
+            <div class="col-sm-10">
+			  <select name="payment_redsys_status" id="input-redsys-status" class="form-control">
+			    {% if payment_redsys_status %}
+                <option value="1" selected="selected">{{ text_enabled }}</option>
+                <option value="0">{{ text_disabled }}</option>
+                {% else %}
+                <option value="1">{{ text_enabled }}</option>
+                <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+	  
+		  <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="payment_redsys_sort_order" id="input-sort-order" value="{{ payment_redsys_sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" />
+            </div>
+          </div>
+		  
+		  <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-redsys-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
+            <div class="col-sm-10">
+              <input type="text" name="payment_redsys_total" id="input-redsys-total" value="{{ payment_redsys_total }}" placeholder="{{ entry_total }}" class="form-control" />
+            </div>
+          </div>
+		  
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+            <div class="col-sm-10">
+              <select name="payment_redsys_geo_zone_id" id="input-geo-zone" class="form-control">
+                <option value="0">{{ text_all_zones }}</option>
+				{% for geo_zone in geo_zones %}				
+				{% if geo_zone.geo_zone_id == payment_redsys_geo_zone_id %}
+                <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                {% else %}
+                <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }} 
